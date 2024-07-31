@@ -61,8 +61,8 @@ image::images/Create_VM_PVC/03_Create_Project.png[]
 == Creating a Virtual Machine Template under your project
 
 . Ensure you are on  the vmexamples project
-. Select create template 
-. 
+. Select create template
+.
 
 
 == Create a Linux virtual machine
@@ -71,7 +71,7 @@ image::images/Create_VM_PVC/03_Create_Project.png[]
 +
 image::images/Create_VM_PVC/53_create_vm_button.png[]
 
-. The wizard will appear showing the available pre-defined VM templates. 
+. The wizard will appear showing the available pre-defined VM templates.
 +
 Reviewing the list of available templates you’ll notice that some have a blue badge which indicates "Source available". These are templates which are using the automatically downloaded and stored template disks reviewed in the previous page. If you were deploying in your own environment, you have the option of preventing these from being created and/or removing those source disks, followed by creating and uploading custom disks for your organization.
 +
@@ -103,16 +103,16 @@ The IP address of the virtual machine on the software-defined network (SDN) is a
 +
 image::images/Create_VM_PVC/10_Fedora_Details.png[]
 
-== Create a VM using instancetypes 
+== Create a VM using instancetypes
 
-. Select VirtualMachines on the side 
+. Select VirtualMachines on the side
 . Select Create VirtualMachine
 . Select from template
 . In the upper middle you will see InstanceType, Select InstanceType
 . You may be presented with a pop up tha askes if you want to enable creating a VirtualMachine from an InstanceType
-.. Select Enable 
+.. Select Enable
 . Select the volume you want to book from (Pick your favorite), in this example we will select centos-stream9
-. Next sleect General Purpose, U series, and select a medium 1 CPUs, 4 GiB Memory
+. Next select General Purpose, N series, and select a medium 1 CPUs, 4 GiB Memory
 . Scroll down and name your virtualMachine centos-test-instancetype-01
 . select Create Virtual Machine
 . You're VirtualMachine will be created
@@ -176,7 +176,7 @@ image::images/Create_VM_PVC/19_Fedora_Metrics.png[]
 
 == Using virtctl to access VMs -- Pause - this may be integrated already for future labs/ Sumit
 
-In this section we will go over the virtctl command and how you can run the command inside the roadshow environment.  The steps here may be different when you run them in a production environment. 
+In this section we will go over the virtctl command and how you can run the command inside the roadshow environment.  The steps here may be different when you run them in a production environment.
 
 . We will need to go to the url for your linux virtctl download
 . Navigate to the Virtualization -> Overview page in the web console
@@ -184,7 +184,7 @@ In this section we will go over the virtctl command and how you can run the comm
 +
 image::images/Virtctl/01_virtctl.png[]
 
-. Right Click on the Download virtctl for Linux for x86_64 link 
+. Right Click on the Download virtctl for Linux for x86_64 link
 +
 image::images/Virtctl/02_virtctl.png[]
 
@@ -192,25 +192,25 @@ image::images/Virtctl/02_virtctl.png[]
 +
 image::images/Virtctl/03_virtctl.png[]
 
-* You will need this link for later.  
+* You will need this link for later.
 * The link will be similar to the following - the only difference will be where the XXXXX is for your specific lab
 ** https://virtctl-route-openshift-cnv.apps.XXXXX.dynamic.redhatworkshops.io/amd/linux/virtctl.tar.gz
-. SSH to the host for the lab (inside bookbag) this will take you to the bastion 
-* example (ssh lab-user@147.28.180.143) 
+. SSH to the host for the lab (inside bookbag) this will take you to the bastion
+* example (ssh lab-user@147.28.180.143)
 . Then type sudo ssh root@192.168.123.100
 * Inside the bastion cli-host you will need to type the following
-** wget --no-check-certificate https://hyperconverged-cluster-cli-download-openshift-cnv.apps.ocp.example.com/amd64/linux/virtctl.tar.gz 
+** wget --no-check-certificate https://hyperconverged-cluster-cli-download-openshift-cnv.apps.ocp.example.com/amd64/linux/virtctl.tar.gz
 ** untar the file by running tar -xvf virtctl.tar.gz
 ** you will need to move the virtctl file to the /usr/local/bin so it is in your PATH
 *** mv virtctl /usr/local/bin/
 ** then export the KUBECONFIG
 *** export KUBECONFIG=/root/.kube/config
 
-== Using virtctl for VMs 
+== Using virtctl for VMs
 
 Now that we have virtctl setup lets do a little CLI
 
-. To get the list of current VMs type the following 
+. To get the list of current VMs type the following
 * oc get vms
 +
 [source,console]
@@ -223,7 +223,7 @@ winweb02   24h   Stopped   False
 ----
 
 
-. Lets get a list of current instancetypes type the following 
+. Lets get a list of current instancetypes type the following
 * oc get vmclusterinstancetypes
 +
 [source,console]
@@ -239,7 +239,7 @@ cx1.xlarge               30h
 ... continued
 ----
 
-. Lets get a list of the current datasources 
+. Lets get a list of the current datasources
 * oc -n openshift-virtualization-os-images get datasources
 +
 [source,console]
@@ -256,11 +256,11 @@ rhel9            30h
 ... continued
 ----
 
-. Lets create a vm in the vmexamples project space with the information we just collected and use the oc create to have the VM to be.  You can mix and match and do 
+. Lets create a vm in the vmexamples project space with the information we just collected and use the oc create to have the VM to be.  You can mix and match and do
 +
 [source,console]
 ----
-[root@ocp4-bastion ~]# oc project vmexample 
+[root@ocp4-bastion ~]# oc project vmexamples
 [root@ocp4-bastion ~]# virtctl create vm \
     --name rhel9-enablement \
     --instancetype n1.medium \
@@ -272,35 +272,35 @@ rhel9            30h
 +
 [source,console]
 ----
-[root@ocp4-bastion ~]# oc project vmexample 
+[root@ocp4-bastion ~]# oc project vmexamples
 [root@ocp4-bastion ~]# virtctl create vm \
     --name rhel9-enablement-02 \
     --instancetype n1.medium \
     --infer-preference \
     --volume-datasource name:root,src:openshift-virtualization-os-images/rhel9,size:30Gi \
     > rhel9-enablement-02.yaml
-[root@ocp4-bastion ~]# oc create -f rhel9-enablement-02.yaml 
+[root@ocp4-bastion ~]# oc create -f rhel9-enablement-02.yaml
 virtualmachine.kubevirt.io/rhel9-enablement-02 created
 ----
 
 == Create a VM with Cloud Init
 
-. Proceed to go back over to your 
+. Proceed to go back over to your
 
-== Create a windows Virtual Machine 
+== Create a windows Virtual Machine
 
-== Create your own VM template 
+== Create your own VM template
 
 
 
-. 
+.
 
 
 
 
 == Live migrate a virtual machine
 
-In this section, we will migrate the VM from one OpenShift node to another without shutting down the VM. Live migration requires `ReadWriteMany` (RWX) storage so that the VM disks can be mounted on both the source and destination nodes at the same time. OpenShift Virtualization, unlike other virtualization solutions, does not use monolithic datastores mounted to each cluster member that hold many VM disks for many different VMs. Instead, each VM disk is stored in its own volume that is only mounted when and where it's needed. 
+In this section, we will migrate the VM from one OpenShift node to another without shutting down the VM. Live migration requires `ReadWriteMany` (RWX) storage so that the VM disks can be mounted on both the source and destination nodes at the same time. OpenShift Virtualization, unlike other virtualization solutions, does not use monolithic datastores mounted to each cluster member that hold many VM disks for many different VMs. Instead, each VM disk is stored in its own volume that is only mounted when and where it's needed.
 
 . Navigate to the *Details* tab to see where the worker node is running:
 +
@@ -322,7 +322,7 @@ As a user with permission to access virtual machines, you can stop, start, resta
 
 . Select the _Virtual Machine_ `fedora02` from the list.
 
-. Press the top-right dropdown, *Actions*, to list the available 
+. Press the top-right dropdown, *Actions*, to list the available
 options:
 +
 image::images/Pods_Migration/30_VM_Actions_List.png[]
@@ -334,7 +334,7 @@ image::images/Pods_Migration/30_VM_Actions_List.png[]
 . Press *Stop* and wait till the _Virtual Machine_ is in state `Stopped`.
 +
 image::images/Pods_Migration/31_VM_Stopped.png[]
-. Clicking on *Actions*, the option *Start* appears, and the options *Restart* and *Pause* are greyed out. 
+. Clicking on *Actions*, the option *Start* appears, and the options *Restart* and *Pause* are greyed out.
 +
 image::images/Pods_Migration/32_VM_Actions_List_Stopped.png[]
 
@@ -346,14 +346,14 @@ image::images/Pods_Migration/33_VM_Actions_Paused.png[]
 
 . Unpause the _Virtual Machine_ using *Actions* and the option *Unpause*.
 
-== Working with VMs 
+== Working with VMs
 
-. ssh to the host for the lab (inside bookbag) this will take you to the bastion 
-. ssh to the host that you can run oc and virtctl from 
+. ssh to the host for the lab (inside bookbag) this will take you to the bastion
+. ssh to the host that you can run oc and virtctl from
 * sudo ssh root@192.168.123.100
-. log into the openshift console 
+. log into the openshift console
 * this is provided in the bop
- 
+
 
 == [Optional] Virtualization Overview dashboard
 
@@ -367,7 +367,7 @@ This overview page provides the OpenShift Virtualization administrator a global 
 +
 [NOTE]
 ====
-Don't forget to check out the `Getting started resources` panel and click the "View all quick starts" link there to access more information about OpenShift virtualization, including Quick Starts which provide many guided walkthroughs including how to create a VM and upload a custom boot source for your virtual machines. 
+Don't forget to check out the `Getting started resources` panel and click the "View all quick starts" link there to access more information about OpenShift virtualization, including Quick Starts which provide many guided walkthroughs including how to create a VM and upload a custom boot source for your virtual machines.
 
 image::images/Create_VM_PVC/create_quickstarts413.png[]
 ====
